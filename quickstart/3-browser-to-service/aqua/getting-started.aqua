@@ -2,7 +2,7 @@ import "@fluencelabs/aqua-lib/builtin.aqua"
 
 const helloWorldNodePeerId ?= "12D3KooWFEwNWcHqi9rtsmDhsYcDbRUCDXH84RC4FW6UfsFWaoHi"
 const helloWorldServiceId ?= "1e740ce4-81f6-4dd4-9bed-8d86e9c2fa50"
-const counterServiceId ?= "d3ab650e-763a-4e75-a4e0-c6d86556eb0c"
+const counterServiceId ?= "ac1db18a-09b6-46a7-8575-4e1a3e990af2"
 
 data HelloWorld:
   msg: string
@@ -12,6 +12,10 @@ data HelloWorld:
 service HelloWorld:
     hello(from: PeerId) -> HelloWorld
 
+-- The service runs on a Fluence node
+service Counter:
+    count(msg: PeerId) -> string
+
 -- The service runs inside browser
 service HelloPeer("HelloPeer"):
     hello(message: string) -> string
@@ -20,11 +24,14 @@ func sayHello(targetPeerId: PeerId, targetRelayPeerId: PeerId) -> string:
     -- execute computation on a Peer in the network
     on helloWorldNodePeerId:
         HelloWorld helloWorldServiceId
+        Counter counterServiceId
         comp <- HelloWorld.hello(%init_peer_id%)
+        <- comp
+        num <- Counter.count(comp.msg)
 
     -- send the result to target browser in the background
     co on targetPeerId via targetRelayPeerId:
         res <- HelloPeer.hello(%init_peer_id%)
 
     -- send the result to the initiator
-    <- comp.reply
+    <- num

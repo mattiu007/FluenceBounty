@@ -6,9 +6,9 @@ module_manifest!();
 pub fn main() {}
 
 #[marine]
-pub fn count(msg: String) -> i32 {
+pub fn count(msg: String) -> String {
     let num: usize = msg.chars().count();
-    num as i32
+    num.to_string()
 }
 
 #[cfg(test)]

@@ -22,6 +22,15 @@ import { RequestFlow } from '@fluencelabs/fluence/dist/internal/RequestFlow';
 
 
 
+//Counter
+//defaultId = undefined
+
+//count: (msg: string) => string
+//END Counter
+
+
+
+
 //HelloPeer
 //defaultId = "HelloPeer"
 
@@ -56,8 +65,11 @@ export async function sayHello(client: FluenceClient, targetPeerId: string, targ
      )
      (xor
       (seq
-       (call -relay- ("op" "noop") [])
-       (call "12D3KooWFEwNWcHqi9rtsmDhsYcDbRUCDXH84RC4FW6UfsFWaoHi" ("1e740ce4-81f6-4dd4-9bed-8d86e9c2fa50" "hello") [%init_peer_id%] comp)
+       (seq
+        (call -relay- ("op" "noop") [])
+        (call "12D3KooWFEwNWcHqi9rtsmDhsYcDbRUCDXH84RC4FW6UfsFWaoHi" ("1e740ce4-81f6-4dd4-9bed-8d86e9c2fa50" "hello") [%init_peer_id%] comp)
+       )
+       (call "12D3KooWFEwNWcHqi9rtsmDhsYcDbRUCDXH84RC4FW6UfsFWaoHi" ("ac1db18a-09b6-46a7-8575-4e1a3e990af2" "count") [comp.$.msg!] num)
       )
       (seq
        (call -relay- ("op" "noop") [])
@@ -85,7 +97,7 @@ export async function sayHello(client: FluenceClient, targetPeerId: string, targ
    )
   )
   (xor
-   (call %init_peer_id% ("callbackSrv" "response") [comp.$.reply!])
+   (call %init_peer_id% ("callbackSrv" "response") [num])
    (call %init_peer_id% ("errorHandlingSrv" "error") [%last_error% 3])
   )
  )
