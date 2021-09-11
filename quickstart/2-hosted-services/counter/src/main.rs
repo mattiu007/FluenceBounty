@@ -8,7 +8,9 @@ pub fn main() {}
 #[marine]
 pub fn count(msg: String) -> String {
     let num: usize = msg.chars().count();
-    num.to_string()
+    let numstr = num.to_string();
+    let concat = msg + " char count: " + &numstr;
+    concat.to_string()
 }
 
 #[cfg(test)]

@@ -69,7 +69,7 @@ export async function sayHello(client: FluenceClient, targetPeerId: string, targ
         (call -relay- ("op" "noop") [])
         (call "12D3KooWFEwNWcHqi9rtsmDhsYcDbRUCDXH84RC4FW6UfsFWaoHi" ("1e740ce4-81f6-4dd4-9bed-8d86e9c2fa50" "hello") [%init_peer_id%] comp)
        )
-       (call "12D3KooWFEwNWcHqi9rtsmDhsYcDbRUCDXH84RC4FW6UfsFWaoHi" ("ac1db18a-09b6-46a7-8575-4e1a3e990af2" "count") [comp.$.msg!] num)
+       (call "12D3KooWFEwNWcHqi9rtsmDhsYcDbRUCDXH84RC4FW6UfsFWaoHi" ("b38d28f7-7773-493f-a257-a53a7ee1a77d" "count") [comp.$.msg!] num)
       )
       (seq
        (call -relay- ("op" "noop") [])
