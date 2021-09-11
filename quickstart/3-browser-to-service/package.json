@@ -1,0 +1,57 @@
+{
+  "name": "getting-started-browser",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@fluencelabs/fluence": "0.10.1",
+    "@fluencelabs/fluence-network-environment": "1.0.10",
+    "@testing-library/jest-dom": "^5.14.1",
+    "@testing-library/react": "^11.2.7",
+    "@testing-library/user-event": "^12.8.3",
+    "@types/jest": "^26.0.24",
+    "@types/node": "^12.20.16",
+    "@types/react": "^17.0.14",
+    "@types/react-dom": "^17.0.9",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-scripts": "4.0.3",
+    "typescript": "^4.3.5",
+    "web-vitals": "^1.1.2"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "compile-aqua": "aqua -i ./aqua/ -o ./src/_aqua",
+    "watch-aqua": "chokidar \"**/*.aqua\" -c \"npm run compile-aqua\"",
+    "fluence-build": "./../2-hosted-services/scripts/build_all.sh",
+    "fluence-deploy": "fldist --node-id 12D3KooWFEwNWcHqi9rtsmDhsYcDbRUCDXH84RC4FW6UfsFWaoHi new_service --ms artifacts/counter.wasm:configs/counter_cfg.json --name counter",
+    "fluence-node": "docker run --rm --name fluence_node -e RUST_LOG=\"info\" -p 1210:1210 -p 4310:4310 -d fluencelabs/fluence:latest -t 1210 -w 4310 -k gKdiCSUr1TFGFEgu2t8Ch1XEUsrN5A2UfBLjSZvfci9SPR3NvZpACfcpPGC3eY4zma1pk7UvYv5zb1VjvPHwCjj --local",
+    "fluence-node-peerid": "docker logs fluence_node 2>&1 | grep \"server peer id\" | rev | cut -d' ' -f1 | rev"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@fluencelabs/aqua": "0.2.2-221",
+    "@fluencelabs/aqua-lib": "0.1.14",
+    "chokidar-cli": "^2.1.0",
+    "node-sass": "^6.0.1"
+  }
+}
